@@ -1,18 +1,21 @@
-
+ 
 version: 2.1
-orbs:	
-	node: circleci/node@2.1.1
+orbs:
+  node: circleci/node@2.1.0
 jobs:
-  build-test:
+  build-and-test:
     executor:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-        steps:
-        - run: npm install
-        - run: npm test
+      - node/install-packages
+      - run: 
+          command: npm test
 workflows:
-    build-test:
+    build-and-test:
       jobs:
-        - build-test
+        - build-and-test
+      parameters:
+        app-dir:
+          default: /server
+          
