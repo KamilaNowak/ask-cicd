@@ -1,0 +1,16 @@
+version: 2.1
+orbs:
+  node: circleci/node@2.1.0
+jobs:
+  build-and-test:
+   working_directory: ~/circlei-workflows
+    steps:
+      - checkout
+      - run: 
+          command: npm test
+workflows:
+    version: 2.1
+    build-and-test:
+      jobs:
+        - build-and-test
+      
