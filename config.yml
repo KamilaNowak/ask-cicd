@@ -15,7 +15,4 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test
-      parameters:
-        app-dir:
-          default: /server
-          
+      
