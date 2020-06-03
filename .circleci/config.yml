@@ -13,14 +13,23 @@ jobs:
       - run:
           command: npm test
           working_directory: ./server
+  build-and-push:
+    steps:
+      - checkout
       - run: 
-           command: |
-            docker build -t kamilanowak/server .
-            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
-            docker push kamilanowak/server
+         command: |
+           docker build -t kamilanowak/server .
+           echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+           docker push kamilanowak/server
 workflows:
     build-and-test:
       jobs:
+       - build-and-push:
+         requires:
+            - build-and-test
+              filters:
+                branches:
+                  only: master            
         - build-and-test:
               filters:
                 branches:
