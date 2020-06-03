@@ -1,15 +1,32 @@
 version: 2.1
 orbs:
-  node: circleci/node@2.1.0
+  node: circleci/node@1.1.6
 jobs:
-  build-and-test:
+ tests:
+    executor:
+      name: node/default
     steps:
       - checkout
-      - run: 
-          command: npm test
+      - node/with-cache:
+          steps:
+            - run: npm install
+            - run: npm test
+ builds:
+   machine: true
+   steps:
+     - checkout
+     - run: 
+         echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
 workflows:
-    version: 2.1
-    build-and-test:
-      jobs:
-        - build-and-test
-      
+      build-on-master:
+        jobs:
+          - builds:
+              requires:
+                 - tests
+              filters:
+                branches:
+                  only: master
+          - tests:
+              filters:
+                branches:
+                  only: master
