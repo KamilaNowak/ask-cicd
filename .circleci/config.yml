@@ -22,12 +22,15 @@ jobs:
            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
            docker push kamilanowak/server
 workflows:
-    build-and-test:
-      jobs:
-       - build-and-push:
-         requires:
-            - build-and-test         
-        - build-and-test:
+    final-build:
+        jobs:
+          - build-and-push:
+              requires:
+                 - build-and-test
+              filters:
+                branches:
+                  only: master
+          - build-and-test:
               filters:
                 branches:
                   only: master
