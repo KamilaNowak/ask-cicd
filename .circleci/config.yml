@@ -9,6 +9,7 @@ jobs:
       - checkout
       - node/install-packages:
           app-dir: ./server
+      - run: npm install
       - run:
           command: npm test
           working_directory: ./server
@@ -16,3 +17,6 @@ workflows:
     build-and-test:
       jobs:
         - build-and-test
+	    filters:
+	       branches:
+	          only: master
