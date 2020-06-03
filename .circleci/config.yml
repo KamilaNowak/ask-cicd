@@ -20,7 +20,7 @@ jobs:
       - run: 
          command: |
            docker build -t kamilanowak/server:server server
-           docker login -u kamilanowak -p testtestask
+           echo "$DOCKER_PASS" | docker login --username $DOCKER_USER --password-stdin
            docker push kamilanowak/server:server
 workflows:
     final-build:
