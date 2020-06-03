@@ -1,31 +1,18 @@
 version: 2.1
 orbs:
-  node: circleci/node@1.1.6
+  node: circleci/node@2.1.0
 jobs:
- tests:
+  build-and-test:
     executor:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: npm install
-            - run: npm test
- builds:
-   machine: true
-   steps:
-     - checkout
-     - run: docket build -t ../server
+      - node/install-packages:
+          app-dir: ./server
+      - run:
+          command: npm test
+          working_directory: ./server
 workflows:
-      build-on-master:
-        jobs:
-          - builds:
-              requires:
-                 - tests
-              filters:
-                branches:
-                  only: master
-          - tests:
-              filters:
-                branches:
-                  only: master
+    build-and-test:
+      jobs:
+        - build-and-test
