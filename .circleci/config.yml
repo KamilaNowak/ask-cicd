@@ -13,8 +13,8 @@ jobs:
       - run:
           command: npm test
           working_directory: ./server
-      - run: docker build -t server:node-side-server server
-      - run: docker push kamilanowak/node-side-server
+      - run: docker build -t server .
+      - run: docker push server
 workflows:
     build-and-test:
       jobs:
