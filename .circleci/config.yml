@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run: 
          command: |
-           docker build -t kamilanowak/server .
+           docker build -t server:server server
            echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
            docker push kamilanowak/server
 workflows:
