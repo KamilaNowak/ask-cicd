@@ -19,9 +19,9 @@ jobs:
       - checkout
       - run: 
          command: |
-           docker build -t server:server server
+           docker build -t kamilanowak/server:server server
            docker login -u kamilanowak -p testtestask
-           docker push kamilanowak/server
+           docker push kamilanowak/server:server
 workflows:
     final-build:
         jobs:
